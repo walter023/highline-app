@@ -4,6 +4,10 @@
     "slug": "highline-app",
     "version": "1.0.0",
     "orientation": "portrait",
+    "androidStatusBar": {
+      "backgroundColor": "#C2185B",
+      "translucent": false
+    },
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
