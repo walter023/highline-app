@@ -14,20 +14,31 @@ const LocationIcons = (props) => (
 
 const PopUpLocation = (props) => {
   const { navigation } = props;
+  const isPopup = () => {
+    if (props.location.highlines.length > 1) {
+      navigation.navigate("Highines", { location: props.location });
+    } else {
+      navigation.navigate("Highine", {
+        locationId: props.location._id,
+        highline: props.location.highlines[0],
+      });
+    }
+  };
   return (
     <FadeInView>
       <Card>
         <View style={{ flex: 0, flexDirection: "row" }}>
           <View style={styles.image}>
-            <TouchableWithoutFeedback
-              onPress={() =>
-                navigation.navigate("Highines", { location: props.location })
-              }
-            >
+            <TouchableWithoutFeedback onPress={isPopup}>
               <Image
                 style={styles.tinyLogo}
                 source={{
-                  uri: props.location.highlines[0].imagesUrl[0], // Math.floor(Math.random() * props.location.highlines[0].imagesUrl.length)
+                  uri:
+                    props.location.highlines[
+                      Math.floor(
+                        Math.random() * props.location.highlines.length
+                      )
+                    ].imagesUrl[0], // Math.floor(Math.random() * props.location.highlines[0].imagesUrl.length)
                 }}
               />
             </TouchableWithoutFeedback>
@@ -44,7 +55,9 @@ const PopUpLocation = (props) => {
           </View>
           <View style={styles.iconStyle}>
             <LocationIcons name="star-outline" />
-            <Text category="s2">{props.location.highlines.length}</Text>
+            <Text appearance="hint" category="s2" style={styles.text}>
+              {props.location.highlines.length}
+            </Text>
           </View>
           <View style={styles.iconStyle}>
             <LocationIcons name="pin-outline" />
@@ -64,7 +77,6 @@ const PopUpLocation = (props) => {
     </FadeInView>
   );
 };
-
 const styles = StyleSheet.create({
   text: {
     fontFamily: "opensans-regular",
@@ -91,5 +103,4 @@ const styles = StyleSheet.create({
   },
   image: { flex: 1, marginBottom: -16, marginLeft: -24, marginTop: -22 },
 });
-
 export default PopUpLocation;

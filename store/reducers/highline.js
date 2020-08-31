@@ -3,13 +3,12 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   locations: [],
   location: {},
-  highline: [],
+  highlines: [],
   highlineId: "",
   locationId: "",
-  redirect: false,
   message: null,
   imageUrl: "",
-  suggestions: [],
+  search: null,
   loading: false,
 };
 
@@ -33,36 +32,30 @@ const setRandomImage = (state, action) => {
   };
 };
 
-const filterHighline = (state, action) => {
-  const highlineArray = state.locations
-    .filter((location) => location._id === state.locationId)
-    .map((location) => {
-      let newHighline = Object.assign({}, location);
-      newHighline.highlines = newHighline.highlines.filter(
-        (highline) => highline._id === state.highlineId
-      );
-      return newHighline;
-    });
+const filterHighlines = (state, action) => {
+  const highlines = state.locations.reduce((highlines, location, index) => {
+    let obj = null;
+    for (let i = 0; i < location.highlines.length; i++) {
+      obj = {
+        locationId: location._id,
+        locationName: location.name,
+        dist: location.dist.calculated,
+        highline: { ...location.highlines[i] },
+      };
+      highlines.push(obj);
+    }
+    return highlines;
+  }, []);
+
   return {
     ...state,
-    highline: highlineArray,
-    redirect: highlineArray == null || highlineArray.length <= 0,
-    locationId: null,
-    highlineId: null,
+    highlines: [...highlines],
   };
 };
 const onSearch = (state, action) => {
   return {
     ...state,
-    locations: [action.location],
-  };
-};
-const setHighline = (state, action) => {
-  return {
-    ...state,
-    highline: [action.highline],
-    loading: false,
-    highlineId: action.highline._id,
+    search: { ...action.search },
   };
 };
 
@@ -88,7 +81,7 @@ const setHighlines = (state, action) => {
   return {
     ...state,
     locations: [...action.locations],
-    redirect: false,
+
     locationId: null,
     highlineId: null,
     message: null,
@@ -120,6 +113,7 @@ const failedFetchHighlines = (state, action) => {
   return {
     ...state,
     message: action.message,
+    loading: false,
   };
 };
 
@@ -154,22 +148,11 @@ const stopLoading = (state, action) => {
     loading: false,
   };
 };
-const redirect = (state, action) => {
-  return {
-    ...state,
-    redirect: !state.redirect,
-  };
-};
+
 const notHiglinesFound = (state, action) => {
   return {
     ...state,
     message: action.message,
-  };
-};
-const onInitHigline = (state, action) => {
-  return {
-    ...state,
-    highline: [],
   };
 };
 
@@ -183,12 +166,10 @@ const reducer = (state = initialState, action) => {
       return setHighlines(state, action);
     case actionTypes.FETCH_HIGHLINES_FAILED:
       return failedFetchHighlines(state, action);
-    case actionTypes.FILTER_HIGHLINE:
-      return filterHighline(state, action);
+    case actionTypes.FILTER_HIGHLINES:
+      return filterHighlines(state, action);
     case actionTypes.POST_HIGHLINE_FAILED:
       return postHighlineFailed(state, action);
-    case actionTypes.SET_HIGHLINE:
-      return setHighline(state, action);
     case actionTypes.SET_RANDOM_IMAGE:
       return setRandomImage(state, action);
     case actionTypes.FETCH_LOCATION_NAME:
@@ -207,10 +188,6 @@ const reducer = (state = initialState, action) => {
       return stopLoading(state, action);
     case actionTypes.UPLOAD_IMAGE_FAILED:
       return uploadImageFailed(state, action);
-    case actionTypes.SET_REDIRECT:
-      return redirect(state, action);
-    case actionTypes.RESET_HIGHLINE:
-      return onInitHigline(state, action);
     case actionTypes.NOT_HIGHLINES:
       return notHiglinesFound(state, action);
     case actionTypes.ON_SEARCH:

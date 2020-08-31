@@ -1,36 +1,32 @@
 import React from "react";
+import { TouchableOpacity, ImageBackground, View } from "react-native";
 import {
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ImageBackground,
-  View,
-} from "react-native";
-import {
-  Divider,
   List,
   Text,
-  TopNavigation,
-  TopNavigationAction,
   Button,
+  useStyleSheet,
+  StyleService,
 } from "@ui-kitten/components";
-import { BackIcon, roundedHanger } from "../UI/appIcon";
+import { HighlineIcon } from "../UI/appIcon";
 import { ImageOverlay } from "../UI/ImageOverlay";
-
-import { HeartIcon, MessageCircleIcon } from "../UI/appIcon";
+import { TopNav } from "../UI/topNav";
 
 export default ({ navigation, route }) => {
   const { location } = route.params;
-  const navigateBack = () => {
-    navigation.goBack();
-  };
-  const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
-  );
+  const styles = useStyleSheet(themedStyles);
+
   const isItemReverse = (index) => {
     return index % 2 === 1;
   };
+
+  const Canyon = () => (
+    <HighlineIcon name="rope-swing" size={28} style={styles.iconButton} />
+  );
+
+  const lengthIcon = () => (
+    <HighlineIcon name="rope" size={28} style={styles.iconHighlighted} />
+  );
+
   const RenderHeadingItem = () => {
     const random = Math.floor(Math.random() * location.highlines.length);
     return (
@@ -60,9 +56,7 @@ export default ({ navigation, route }) => {
       </ImageOverlay>
     );
   };
-
   const renderHighline = (highline) => {
-    //console.log(highline);
     return (
       <TouchableOpacity
         style={[
@@ -70,7 +64,12 @@ export default ({ navigation, route }) => {
           isItemReverse(highline.index) && styles.itemReverse,
         ]}
         activeOpacity={0.95}
-        // onPress={() => onItemPress(info.index + 1)}
+        onPress={() =>
+          navigation.navigate("Highine", {
+            locationId: location._id,
+            highline: highline.item,
+          })
+        }
       >
         <ImageBackground
           style={styles.itemSection}
@@ -86,21 +85,15 @@ export default ({ navigation, route }) => {
             {highline.item.name}
           </Text>
           <View style={styles.itemReactionsContainer}>
-            <Button
-              style={styles.iconButton}
-              appearance="ghost"
-              status="basic"
-              accessoryLeft={MessageCircleIcon}
-            >
-              2
+            <Button appearance="ghost" status="basic" accessoryLeft={Canyon}>
+              {highline.item.high}
             </Button>
             <Button
-              style={styles.iconButton}
               appearance="ghost"
-              status="danger"
-              accessoryLeft={HeartIcon}
+              status="warning"
+              accessoryLeft={lengthIcon}
             >
-              1
+              {highline.item.long}
             </Button>
           </View>
         </View>
@@ -109,13 +102,8 @@ export default ({ navigation, route }) => {
   };
 
   return (
-    <React.Fragment>
-      <TopNavigation
-        title="Location Details"
-        alignment="center"
-        accessoryLeft={BackAction}
-      />
-      <Divider />
+    <View style={styles.container}>
+      <TopNav navigation={navigation} tittle="Highlines" />
       <List
         style={styles.list}
         data={location.highlines}
@@ -123,11 +111,15 @@ export default ({ navigation, route }) => {
         ListHeaderComponent={RenderHeadingItem}
         keyExtractor={(highline) => highline._id}
       />
-    </React.Fragment>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
+  container: {
+    flex: 1,
+    backgroundColor: "background-basic-color-2",
+  },
   list: {
     flex: 1,
   },
@@ -168,5 +160,10 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     paddingHorizontal: 0,
+    tintColor: "text-hint-color",
+  },
+  iconHighlighted: {
+    paddingHorizontal: 0,
+    tintColor: "color-warning-500",
   },
 });

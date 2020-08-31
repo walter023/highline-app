@@ -1,9 +1,10 @@
 import axios from "../../utilities/axios";
 import * as actionTypes from "./actionTypes";
+import { Alert } from "react-native";
 
 export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("tokenExpiration");
+  //localStorage.removeItem("token");
+  //localStorage.removeItem("tokenExpiration");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -25,19 +26,17 @@ export const authFail = (error) => {
     error: error,
   };
 };
-export const login = (email, password) => {
+export const login = (userData) => {
   return (dispatch) => {
     dispatch(authStart());
-    const authData = {
-      email: email,
-      password: password,
-    };
     axios
-      .post("/signin", authData)
+      .post("/signin", userData)
       .then((response) => {
         const tokenExpiration = new Date(new Date().getTime() + 3600 * 1000); // current time + 1h
-        localStorage.setItem("token", response.data.data);
-        localStorage.setItem("tokenExpiration", tokenExpiration);
+        //localStorage.setItem("token", response.data.data);
+        //localStorage.setItem("tokenExpiration", tokenExpiration);
+
+        //console.log("log in with TOKEK : !!", response.data.data);
         dispatch(authSuccess(response.data.data));
         dispatch(setAuthTimeout());
       })

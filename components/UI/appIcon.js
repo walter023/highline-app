@@ -1,86 +1,50 @@
 import React from "react";
 import { Icon } from "@ui-kitten/components";
 import HighlineIconsPack from "../../utilities/highlineIconsPack";
-import { TINT_COLOR } from "../../utilities/constans";
 
 // Eva Icons
-export const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
-export const HeartIcon = (style) => <Icon {...style} name="heart" />;
+export const CloseIcon = (props) => <Icon {...props} name="close-outline" />;
+export const Person = (props) => <Icon {...props} name="person-outline" />;
+export const GoogleIcon = (style) => <Icon {...style} name="google" />;
+export const FacebookIcon = (style) => <Icon {...style} name="facebook" />;
+export const TwitterIcon = (style) => <Icon {...style} name="twitter" />;
+export const ArrowForwardIcon = (style) => (
+  <Icon {...style} name="arrow-forward-outline" />
+);
+export const ArrowForwardIconOutline = (style) => (
+  <Icon {...style} name="arrow-forward-outline" />
+);
+export const BackIcon = (props) => (
+  <Icon {...props} name="arrow-ios-back-outline" />
+);
+export const MoreIcon = (props) => (
+  <Icon {...props} name="more-horizontal-outline" />
+);
+export const HeartIcon = (style) => {
+  return <Icon {...style} name="heart" />;
+};
 export const Layers = (style) => {
   const newStyle = { ...style, height: 24, width: 24 };
   return <Icon {...newStyle} name="layers-outline" />;
 };
 export const Map = (style) => <Icon {...style} name="map-outline" />;
-export const Navigation = (style) => {
-  // console.log(style);
-  return <Icon {...style} name="navigation-2-outline" />;
-};
 
+export const Navigation = (style) => {
+  const newStyle = { ...style, height: 24, width: 24 };
+  return <Icon {...newStyle} name="navigation-2-outline" />;
+};
+export const Length = (style) => {
+  return <Icon {...style} name="minus" />;
+};
 export const MessageCircleIcon = (style) => (
   <Icon {...style} name="message-circle-outline" />
 );
-
 // highline-set-icons
-export const RoundedHanger = (props) => {
-  const style = props.style ? ovirrideStyle(props.style) : props;
-  return <HighlineIconsPack {...style} name="rounded-hanger" size={24} />;
+export const HighlineIcon = (props) => {
+  const style = props.style ? { ...props.style, ...props } : { ...props };
+  style.color = style.tintColor;
+  style.size = style.size || style.height;
+  delete style.style;
+  delete style.tintColor;
+  return <HighlineIconsPack {...style} />;
 };
-
-export const Risk = (props) => {
-  const style = props.style ? ovirrideStyle(props.style) : props;
-  return <HighlineIconsPack {...style} name="risk" size={24} />;
-};
-
-export const Mountain = (props) => {
-  const style = props.style ? ovirrideStyle(props.style) : props;
-  return (
-    <HighlineIconsPack
-      {...style}
-      name="mountain1"
-      size={20}
-      color={TINT_COLOR}
-    />
-  );
-};
-
-/*export const Layers = (props) => {
-  const style = props.style ? ovirrideStyle(props.style) : props;
-  return (
-    <HighlineIconsPack {...style} name="layers" size={20} color={TINT_COLOR} />
-  );
-};*/
-
-export const MapFilled = (props) => {
-  const style = props.style ? ovirrideStyle(props.style) : props;
-  return (
-    <HighlineIconsPack {...style} name="map" size={25} color={TINT_COLOR} />
-  );
-};
-const ovirrideStyle = (KittenStyle) => {
-  const style = { ...KittenStyle, color: KittenStyle.tintColor };
-  delete KittenStyle.tintColor;
-  return style;
-};
-
-/*
-// highline-set-icons
-export const RoundedHanger = (props) => {
-  return (
-    <HighlineIconsPack
-      {...ovirrideStyle(props)}
-      name="rounded-hanger"
-      size={52}
-      color="red"
-    />
-  );
-};
-
-const ovirrideStyle = (props) => {
-  if (props.style) {
-    const style = { ...KittenStyle, color: KittenStyle.tintColor };
-    delete KittenStyle.tintColor;
-    return style;
-  } else {
-    return props;
-  }
-};*/

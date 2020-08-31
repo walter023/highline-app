@@ -1,33 +1,22 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../utilities/axios";
-export const filterHighline = (highline) => {
+export const filterHighlines = () => {
   return {
-    type: actionTypes.FILTER_HIGHLINE,
-    highline: highline,
+    type: actionTypes.FILTER_HIGHLINES,
   };
 };
-
-export const setHighline = (highline) => {
-  return {
-    type: actionTypes.SET_HIGHLINE,
-    highline: highline,
-  };
-};
-
 export const setHighlineId = (highlineId) => {
   return {
     type: actionTypes.SET_HIGHLINE_ID,
     highlineId: highlineId,
   };
 };
-
 export const setLocation = (location) => {
   return {
     type: actionTypes.SET_LOCATION,
     location: location,
   };
 };
-
 export const clearLocation = () => {
   return {
     type: actionTypes.CLEAR_LOCATION,
@@ -51,46 +40,36 @@ export const suggestLocationName = (data) => {
     suggestions: data,
   };
 };
-
 export const setRandomImage = (data) => {
   return {
     type: actionTypes.SET_RANDOM_IMAGE,
     data: data,
   };
 };
-
 export const postLocationFailed = (error) => {
   return {
     type: actionTypes.POST_LOCATION_FAILED,
     message: error,
   };
 };
-export const onSearch = (location) => {
+export const onSearch = (search) => {
   return {
     type: actionTypes.ON_SEARCH,
-    location: location,
+    search: search,
   };
 };
-
 export const postHighlineFailed = (error) => {
   return {
     type: actionTypes.POST_HIGHLINE_FAILED,
     message: error,
   };
 };
-export const redirect = () => {
-  return {
-    type: actionTypes.SET_REDIRECT,
-  };
-};
-
 export const notHighlines = (message) => {
   return {
     type: actionTypes.NOT_HIGHLINES,
     message: message,
   };
 };
-
 export const startLoading = () => {
   return {
     type: actionTypes.START_LOADING,
@@ -99,12 +78,6 @@ export const startLoading = () => {
 export const stopLoading = () => {
   return {
     type: actionTypes.STOP_LOADING,
-  };
-};
-
-export const onInitHighline = () => {
-  return {
-    type: actionTypes.RESET_HIGHLINE,
   };
 };
 export const fetchHighlinesFailed = (error) => {
@@ -175,21 +148,13 @@ export const uploadImages = (formData, highlineId) => {
 export const initHighlines = (coords) => {
   return async (dispatch) => {
     try {
+      dispatch(startLoading());
       const response = await axios.get(`/location/${coords.lng}/${coords.lat}`);
-    //  const locations = response.data.data.map(
-      //  (location) => new Location(location)
-    //  );
-
-      // console.log(response.data.data[0]);
-       //console.log(locations[0]);
       dispatch(setHighlines(response.data.data));
-
-      // dispatch(stopLoading());
-      // dispatch(setRandomImage(response.data.data));
+      dispatch(stopLoading());
     } catch (err) {
-      console.log(err);
       // const error = err.response.data.error || err.message;
-      //dispatch(fetchHighlinesFailed(error));
+      dispatch(fetchHighlinesFailed(err));
     }
   };
 };

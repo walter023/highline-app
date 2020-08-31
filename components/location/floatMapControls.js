@@ -2,15 +2,17 @@ import {
   MenuItem,
   OverflowMenu,
   Button,
-  withStyles,
+  Layout,
   Text,
 } from "@ui-kitten/components";
-import { Mountain, Layers, Navigation } from "../../components/UI/appIcon";
+import { Layers, Navigation } from "../../components/UI/appIcon";
 import { StyleSheet, View, Dimensions } from "react-native";
 import React, { useState } from "react";
 import { PRIMARY_COLOR } from "../../utilities/constans";
 
+
 const floatMapControls = (props) => {
+
   const [visible, setVisible] = useState(false);
   const initialState = {
     satellite: null,
@@ -73,7 +75,7 @@ const floatMapControls = (props) => {
         />
       </OverflowMenu>
 
-      <View style={styles.containerOffset}>
+      <Layout style={styles.containerOffset}>
         <Button
           style={styles.iconButton}
           appearance="ghost"
@@ -81,8 +83,8 @@ const floatMapControls = (props) => {
           accessoryLeft={Layers}
           onPress={() => setVisible(true)}
         />
-      </View>
-      <View style={styles.containerOffset}>
+      </Layout>
+      <Layout style={styles.containerOffset}>
         <Button
           style={styles.iconButton}
           appearance="ghost"
@@ -90,7 +92,7 @@ const floatMapControls = (props) => {
           accessoryLeft={Navigation}
           onPress={() => setVisible(true)}
         />
-      </View>
+      </Layout>
     </View>
   );
 };
@@ -100,25 +102,25 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2.5 },
-  },
-  iconButton: {
     paddingHorizontal: 0,
     borderRadius: 300,
-    borderWidth: 3,
-    backgroundColor: "#222B45",
-    overflow: "hidden",
+    borderWidth: 0,
     marginVertical: 5,
     width: 50,
     height: 50,
   },
+
   mapType: {
+    flex: 1,
     position: "absolute",
     left: Dimensions.get("window").width - 60,
     bottom: Dimensions.get("window").height / 2,
   },
   overflowMenu: {
-    left: 200,
+    //  flex:1,
+    left: 10,
     width: 90,
+    flexDirection: "column",
   },
 });
 

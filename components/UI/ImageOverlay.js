@@ -1,8 +1,6 @@
 import React from "react";
 import {
   ImageBackground,
-  ImageBackgroundProps,
-  StyleProp,
   StyleSheet,
   View,
 } from "react-native";

@@ -1,6 +1,6 @@
 export {
   initHighlines,
-  filterHighline,
+  filterHighlines,
   setHighlineId,
   setLocationId,
   getLocationName,
@@ -9,9 +9,9 @@ export {
   postHighline,
   uploadImages,
   clearLocation,
-  onInitHighline,
   onSearchLocation,
   stopLoading,
-  cleanMessage
+  cleanMessage,
+  onSearch,
 } from "./highlineActions";
 export { login, logout, autoLogin } from "./authActions";
