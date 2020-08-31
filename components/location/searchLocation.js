@@ -32,7 +32,7 @@ const SearchLocation = (props) => {
   return (
     <Layout style={styles.container}>
       <GoogleAutoComplete
-        apiKey={"AIzaSyDytQu4OVCZ8ssXr9JVwViIf3jHGkjW4aQ"}
+        apiKey={""}
         debounce={500}
         minLength={3}
         queryTypes="(cities)"
