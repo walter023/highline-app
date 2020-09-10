@@ -19,7 +19,7 @@ import Highline from "../components/highlines/highline";
 import SearchLocation from "../components/location/searchLocation";
 import SingIn from "../components/auth/singIn";
 import SingUp from "../components/auth/singUp";
-
+import Form from "../components/form/form"
 const { Navigator, Screen } = createBottomTabNavigator();
 
 const worldIcon = (props) => <Icon {...props} name="globe-2-outline" />;
@@ -81,6 +81,7 @@ function HomeStack() {
       <Stack.Screen name="Highine" component={Highline} />
       <Stack.Screen name="SingIn" component={SingIn} />
       <Stack.Screen name="SingUp" component={SingUp} />
+      <Stack.Screen name="Form" component={Form} />
       <Stack.Screen
         name="Search"
         component={SearchLocation}

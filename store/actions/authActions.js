@@ -1,6 +1,6 @@
 import axios from "../../utilities/axios";
 import * as actionTypes from "./actionTypes";
-import { Alert } from "react-native";
+import { AsyncStorage } from "react-native";
 
 export const logout = () => {
   //localStorage.removeItem("token");
@@ -33,15 +33,14 @@ export const login = (userData) => {
       .post("/signin", userData)
       .then((response) => {
         const tokenExpiration = new Date(new Date().getTime() + 3600 * 1000); // current time + 1h
-        //localStorage.setItem("token", response.data.data);
-        //localStorage.setItem("tokenExpiration", tokenExpiration);
+        AsyncStorage.setItem("token", response.data.data);
+        AsyncStorage.setItem("tokenExpiration", tokenExpiration.toString());
 
-        //console.log("log in with TOKEK : !!", response.data.data);
         dispatch(authSuccess(response.data.data));
         dispatch(setAuthTimeout());
       })
       .catch((err) => {
-        const error = err.response.data.error || err.message;
+        const error = err.message || err.response.data.error;
         dispatch(authFail(error));
       });
   };
@@ -55,11 +54,11 @@ export const setAuthTimeout = () => {
 };
 export const autoLogin = () => {
   return (dispatch) => {
-    const token = localStorage.getItem("token");
+    const token = AsyncStorage.getItem("token");
     if (!token) {
       dispatch(logout());
     } else {
-      const tokenExpiration = new Date(localStorage.getItem("tokenExpiration"));
+      const tokenExpiration = new Date(AsyncStorage.getItem("tokenExpiration"));
       if (tokenExpiration <= new Date()) {
         dispatch(logout());
       } else {

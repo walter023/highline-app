@@ -133,7 +133,6 @@ export default ({ navigation }) => {
           errorText="Please enter highliner name!"
           keyboardType="default"
           autoCapitalize="sentences"
-          autoCorrect
           returnKeyType="next"
           placeholder="Highliner Name"
           initialValue=""
@@ -143,9 +142,11 @@ export default ({ navigation }) => {
         <InputApp
           id="email"
           email
+          required
           label="Email"
+          autoCompleteType="email"
           errorText="Please enter a valid email!"
-          keyboardType="default"
+          keyboardType="email-address"
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
@@ -161,7 +162,6 @@ export default ({ navigation }) => {
           errorText="Please enter a valid password!"
           keyboardType="default"
           autoCapitalize="sentences"
-          autoCorrect
           returnKeyType="next"
           placeholder="Password"
           initialValue=""

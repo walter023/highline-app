@@ -10,28 +10,8 @@ const initialState = {
   imageUrl: "",
   search: null,
   loading: false,
+  suggestions:[]
 };
-
-const setRandomImage = (state, action) => {
-  const locations = action.data.filter(
-    (location) => location.highlines.length > 0
-  );
-  const randomLocation =
-    locations[Math.floor(Math.random() * locations.length)];
-  const randomHighline =
-    randomLocation.highlines[
-      Math.floor(Math.random() * randomLocation.highlines.length)
-    ];
-  const url =
-    randomHighline.imagesUrl[
-      Math.floor(Math.random() * randomHighline.imagesUrl.length)
-    ];
-  return {
-    ...state,
-    imageUrl: url,
-  };
-};
-
 const filterHighlines = (state, action) => {
   const highlines = state.locations.reduce((highlines, location, index) => {
     let obj = null;
@@ -52,6 +32,12 @@ const filterHighlines = (state, action) => {
     highlines: [...highlines],
   };
 };
+const sugestLocationName = (state, action) => {
+  return {
+    ...state,
+    suggestions: [...action.suggestions],
+  };
+};
 const onSearch = (state, action) => {
   return {
     ...state,
@@ -59,12 +45,6 @@ const onSearch = (state, action) => {
   };
 };
 
-const sugestLocationName = (state, action) => {
-  return {
-    ...state,
-    suggestions: [...action.suggestions],
-  };
-};
 const setHighlineId = (state, action) => {
   return {
     ...state,

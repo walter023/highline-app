@@ -16,6 +16,7 @@ import highlineReducer from "./store/reducers/highline";
 import authReducer from "./store/reducers/auth";
 import AppNavigator from "./navigation/AppNavigator";
 import ThemeContext from "./utilities/themeContext";
+
 enableScreens();
 
 const rootReducer = combineReducers({
@@ -25,7 +26,6 @@ const rootReducer = combineReducers({
 
 const store = createStore(
   rootReducer,
-
   applyMiddleware(thunk)
 );
 

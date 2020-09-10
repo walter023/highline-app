@@ -9,7 +9,6 @@ const Search = (props) => {
     state.data.search ? state.data.search.name : ""
   );
   React.useEffect(() => {
-  
     shakeIconRef.current.startAnimation(() => setStatus("basic"));
   }, []);
 

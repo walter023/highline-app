@@ -5,7 +5,6 @@ import { HighlineIcon } from "../UI/appIcon";
 
 const { width } = Dimensions.get("window");
 //const ratio = 228 / 295;
-console.log("android", width);
 export const CARD_WIDTH = width - 50; //width * 0.80;
 export const CARD_HEIGHT = 250; //CARD_WIDTH * ratio;
 

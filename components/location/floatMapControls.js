@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     bottom: Dimensions.get("window").height / 2,
   },
   overflowMenu: {
-    //  flex:1,
     left: 10,
     width: 90,
     flexDirection: "column",

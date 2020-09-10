@@ -13,9 +13,11 @@ import { ImageOverlay } from "../UI/ImageOverlay";
 import InputApp from "../UI/Input";
 import { formReducer, FORM_INPUT_UPDATE } from "../../store/reducers/form";
 import * as actions from "../../store/actions/index";
+import { ModalApp } from "../UI/modal";
 
 export default ({ navigation }) => {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const passwordRef = useRef(null);
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -29,10 +31,12 @@ export default ({ navigation }) => {
     formIsValid: false,
   });
   const onSignInButtonPress = () => {
+    navigation.navigate("Form");
+
     if (formState.formIsValid) {
       dispatch(actions.login(formState.inputValues));
+      if (auth.token) navigation.navigate("Form");
     }
-    // navigation && navigation.goBack();
   };
   const onSignUpButtonPress = () => {
     navigation && navigation.navigate("SingUp");
@@ -56,6 +60,7 @@ export default ({ navigation }) => {
         style={styles.container}
         source={require("../../assets/bg-img.jpg")}
       >
+        {auth.error ? <ModalApp message={auth.error} /> : null}
         <View style={styles.signInContainer}>
           <Text style={styles.signInLabel} status="control" category="h4">
             SIGN IN
@@ -78,9 +83,10 @@ export default ({ navigation }) => {
             id="email"
             email
             required
+            autoCompleteType="email"
             inputLabel=" EMAIL"
             errorText="Please enter a valid email!"
-            keyboardType="default"
+            keyboardType="email-address"
             autoCapitalize="sentences"
             autoCorrect
             returnKeyType="next"

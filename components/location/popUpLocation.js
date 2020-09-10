@@ -26,7 +26,7 @@ const PopUpLocation = (props) => {
   };
   return (
     <FadeInView>
-      <Card>
+      <Card onPress={isPopup}>
         <View style={{ flex: 0, flexDirection: "row" }}>
           <View style={styles.image}>
             <TouchableWithoutFeedback onPress={isPopup}>
@@ -43,6 +43,7 @@ const PopUpLocation = (props) => {
               />
             </TouchableWithoutFeedback>
           </View>
+
           <View style={{ flex: 1.5 }}>
             <Text style={styles.text} category="p1">
               {props.location.name}
@@ -67,6 +68,7 @@ const PopUpLocation = (props) => {
               } km`}
             </Text>
           </View>
+
           <View style={styles.closeWindow}>
             <TouchableWithoutFeedback onPress={() => props.showPopUp(null)}>
               <LocationIcons name="close-outline" animation="zoom" />
