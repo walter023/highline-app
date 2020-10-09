@@ -26,10 +26,17 @@ const filterHighlines = (state, action) => {
     }
     return highlines;
   }, []);
-
   return {
     ...state,
     highlines: [...highlines],
+  };
+};
+const setLocation = (state, action) => {
+  return {
+    ...state,
+    location: { ...action.location },
+    message: null,
+    loading: false,
   };
 };
 const sugestLocationName = (state, action) => {
@@ -61,21 +68,12 @@ const setHighlines = (state, action) => {
   return {
     ...state,
     locations: [...action.locations],
-
     locationId: null,
     highlineId: null,
     message: null,
   };
 };
-const setLocation = (state, action) => {
-  return {
-    ...state,
-    location: { ...action.location },
-    locationId: action.location._id,
-    message: null,
-    loading: false,
-  };
-};
+
 const clearLocation = (state, action) => {
   return {
     ...state,

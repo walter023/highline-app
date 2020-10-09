@@ -3,8 +3,8 @@ import * as actionTypes from "./actionTypes";
 import { AsyncStorage } from "react-native";
 
 export const logout = () => {
-  //localStorage.removeItem("token");
-  //localStorage.removeItem("tokenExpiration");
+  AsyncStorage.removeItem("token");
+  AsyncStorage.removeItem("tokenExpiration");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };

@@ -1,19 +1,20 @@
 import React from "react";
 import FadeInView from "../UI/FadeInView";
+import { View, Image, TouchableWithoutFeedback } from "react-native";
 import {
-  View,
-  Image,
-  TouchableWithoutFeedback,
-  StyleSheet,
-} from "react-native";
-import { Card, Text, Icon } from "@ui-kitten/components";
+  Card,
+  Text,
+  Icon,
+  StyleService,
+  useStyleSheet,
+} from "@ui-kitten/components";
+import { HighlineIcon } from "../UI/AppIcon";
 
-const LocationIcons = (props) => (
-  <Icon style={styles.icon} {...props} fill="#8F9BB3" />
-);
+const LocationIcons = (props) => <Icon {...props} fill="#8F9BB3" />;
 
 const PopUpLocation = (props) => {
   const { navigation } = props;
+  const styles = useStyleSheet(themedStyles);
   const isPopup = () => {
     if (props.location.highlines.length > 1) {
       navigation.navigate("Highines", { location: props.location });
@@ -55,13 +56,18 @@ const PopUpLocation = (props) => {
             </Text>
           </View>
           <View style={styles.iconStyle}>
-            <LocationIcons name="star-outline" />
+            <HighlineIcon
+              style={styles.slacklineIcon}
+              name="slacklining"
+              fill="#8F9BB3"
+            />
             <Text appearance="hint" category="s2" style={styles.text}>
               {props.location.highlines.length}
             </Text>
           </View>
           <View style={styles.iconStyle}>
-            <LocationIcons name="pin-outline" />
+            <LocationIcons name="pin-outline" style={styles.icon} />
+
             <Text style={styles.text} appearance="hint" category="s2">
               {`${
                 Math.round((props.location.dist.calculated / 1000) * 10) / 10
@@ -71,7 +77,7 @@ const PopUpLocation = (props) => {
 
           <View style={styles.closeWindow}>
             <TouchableWithoutFeedback onPress={() => props.showPopUp(null)}>
-              <LocationIcons name="close-outline" animation="zoom" />
+              <LocationIcons name="close-outline" style={styles.icon} />
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -79,7 +85,7 @@ const PopUpLocation = (props) => {
     </FadeInView>
   );
 };
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
   text: {
     fontFamily: "opensans-regular",
   },
@@ -91,10 +97,14 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
+  slacklineIcon: {
+    height: 28,
+    tintColor: "text-hint-color",
+  },
   iconStyle: {
     flexDirection: "column",
     alignItems: "center",
-    paddingLeft: 5,
+    paddingLeft: 10,
   },
   closeWindow: {
     flexDirection: "column",
@@ -103,6 +113,6 @@ const styles = StyleSheet.create({
     marginRight: -20,
     paddingLeft: 5,
   },
-  image: { flex: 1, marginBottom: -16, marginLeft: -24, marginTop: -22 },
+  image: { flex: 1, marginBottom: -16, marginLeft: -24, marginTop: -18 },
 });
 export default PopUpLocation;

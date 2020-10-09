@@ -3,7 +3,7 @@ import { Button, Text } from "@ui-kitten/components";
 import { View, StyleSheet, Dimensions } from "react-native";
 
 
-const truncateText = (props) => {
+const TruncateText = (props) => {
   const [text, setText] = useState(props.text);
   const [visible, setVisible] = useState(false);
   const NUMBER_LINES = 580;
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default truncateText;
+export default TruncateText;

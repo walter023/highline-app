@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Animated, FlatList } from "react-native";
 import { Layout, TopNavigation } from "@ui-kitten/components";
 import { useSelector, useDispatch } from "react-redux";
-import { TopNav } from "../components/UI/topNav";
+import { TopNav } from "../components/UI/TopNav";
 import ContainerCard from "../components/highlines/containerCard";
 import * as actions from "../store/actions/index";
 
@@ -26,7 +26,6 @@ const LocationList = ({navigation}) => {
         scrollEventThrottle={16}
         bounces={false}
         data={highlines}
-
         renderItem={({ index, item: item }) => (
           <ContainerCard {...{ index, y, item }} navigation={navigation} />
         )}

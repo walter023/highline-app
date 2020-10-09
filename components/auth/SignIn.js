@@ -1,19 +1,18 @@
-import React, { useReducer, useCallback, useRef } from "react";
+import React, { useReducer, useCallback, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { Button, Text } from "@ui-kitten/components";
 import {
   ArrowForwardIcon,
   FacebookIcon,
   GoogleIcon,
   TwitterIcon,
-} from "../UI/appIcon";
-import { KeyboardAvoidingView } from "../UI/keyboardAvoidingView";
+} from "../UI/AppIcon";
+import { KeyboardAvoidingView } from "../UI/KeyboardAvoidingView";
 import { ImageOverlay } from "../UI/ImageOverlay";
 import InputApp from "../UI/Input";
 import { formReducer, FORM_INPUT_UPDATE } from "../../store/reducers/form";
 import * as actions from "../../store/actions/index";
-import { ModalApp } from "../UI/modal";
 
 export default ({ navigation }) => {
   const dispatch = useDispatch();
@@ -31,11 +30,9 @@ export default ({ navigation }) => {
     formIsValid: false,
   });
   const onSignInButtonPress = () => {
-    navigation.navigate("Form");
-
     if (formState.formIsValid) {
       dispatch(actions.login(formState.inputValues));
-      if (auth.token) navigation.navigate("Form");
+      if (auth.token) navigation.navigate("LocationForm");
     }
   };
   const onSignUpButtonPress = () => {
@@ -53,14 +50,17 @@ export default ({ navigation }) => {
     },
     [dispatchFormState]
   );
-
+  useEffect(() => {
+    if (auth.error) {
+      Alert.alert("Auth Failed!", auth.error, [{ text: "Okay" }]);
+    }
+  }, [auth.error]);
   return (
-    <KeyboardAvoidingView>
+    <React.Fragment>
       <ImageOverlay
         style={styles.container}
         source={require("../../assets/bg-img.jpg")}
       >
-        {auth.error ? <ModalApp message={auth.error} /> : null}
         <View style={styles.signInContainer}>
           <Text style={styles.signInLabel} status="control" category="h4">
             SIGN IN
@@ -149,7 +149,7 @@ export default ({ navigation }) => {
           </View>
         </View>
       </ImageOverlay>
-    </KeyboardAvoidingView>
+    </React.Fragment>
   );
 };
 

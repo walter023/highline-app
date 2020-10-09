@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Alert, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useReducer, useCallback, useRef, useEffect } from "react";
 import InputApp from "../UI/Input";
@@ -8,38 +8,40 @@ import {
   StyleService,
   Text,
   useStyleSheet,
-  Layout,
   Autocomplete,
   AutocompleteItem,
 } from "@ui-kitten/components";
-import { TopNav } from "../UI/topNav";
-import { KeyboardAvoidingView } from "../UI/keyboardAvoidingView";
+import { TopNav } from "../UI/TopNav";
+import { KeyboardAvoidingView } from "../UI/KeyboardAvoidingView";
 import { formReducer, FORM_INPUT_UPDATE } from "../../store/reducers/form";
 import * as actions from "../../store/actions/index";
 
-export default (props) => {
+const LocationFrom = (props) => {
   const { navigation } = props;
   const styles = useStyleSheet(themedStyles);
+  const dispatch = useDispatch();
   const descriptionRef = useRef(null);
   const longitudeRef = useRef(null);
-  const highlineNameRef = useRef(null);
-  const highRef = useRef(null);
-  const dispatch = useDispatch();
-  const locations = useSelector((state) => state.data.suggestions);
-  const [value, setValue] = React.useState("");
   const [data, setData] = React.useState({});
+  const [value, setValue] = React.useState("");
+  const locations = useSelector((state) => state.data.suggestions);
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      locationName: "",
-      description: locations.length > 0 ? locations[0].description : "",
-      approach: "",
+      name: value,
+      description: data.description ? data.description : "",
+      approach: data.approach ? data.approach : "",
+      latitude: data.location ? data.location.coordinates[1] : "",
+      longitude: data.location ? data.location.coordinates[1] : "",
     },
     inputValidities: {
-      locationName: "",
-      description: "",
-      approach: "",
+      name: !!data.locationName,
+      description: !!data.description,
+      approach: !!data.approach,
+      latitude: !!data.location,
+      longitude: !!data.location,
     },
-    formIsValid: false,
+    formIsValid: !Object.keys(data).length === 0,
   });
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -55,6 +57,7 @@ export default (props) => {
   const onSelect = (index) => {
     setData(locations[index]);
     setValue(locations[index].name);
+    inputChangeHandler("name", locations[index].name, true);
   };
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -62,28 +65,47 @@ export default (props) => {
     }, 500);
     return () => clearTimeout(timer);
   }, [value, dispatch]);
-
   useEffect(() => {
-    dispatch(actions.getLocationName("Scarface"));
+    dispatch(actions.getLocationName());
   }, []);
-
   const renderOption = (item, index) => (
     <AutocompleteItem textStyle={styles.text} key={index} title={item.name} />
   );
-
   const clearFields = () => {
-    if (value !== data.name) {
-      setData({});
-      dispatch(actions.getLocationName("Scarface"));
-    }
+    setData({});
+    dispatch(actions.getLocationName());
+    inputChangeHandler("name", value, true);
   };
+  const submitHandler = useCallback(() => {
+    if (!formState.formIsValid) {
+      Alert.alert("Wrong input!", "Please check the errors in the form.", [
+        { text: "Okay" },
+      ]);
+      return;
+    }
+    if (data._id) {
+       // TODO: dispatch() update
+      dispatch(actions.setLocation(data));
+      navigation.navigate("HighlineForm");
+    } else {
+      dispatch(
+        actions.postLocation({
+          ...formState.inputValues,
+          location: {
+            type: "Point",
+            coordinates: [
+              parseFloat(formState.inputValues.longitude),
+              parseFloat(formState.inputValues.latitude),
+            ],
+          },
+        })
+      );
+    }
+  }, [dispatch, data, formState]);
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <TopNav navigation={navigation} tittle="Highline Guide" />
+      <TopNav navigation={navigation} tittle="Location Form" />
       <View style={[styles.container, styles.formContainer]}>
-        <Text style={[styles.text, styles.title]} category="h5">
-          Location Details
-        </Text>
         <Autocomplete
           label="Name"
           placeholder="Location Name"
@@ -109,7 +131,6 @@ export default (props) => {
           onInputChange={inputChangeHandler}
           ref={descriptionRef}
           required
-          autoCorrect
           initiallyValid={data.description}
         />
         <InputApp
@@ -124,11 +145,11 @@ export default (props) => {
           size="large"
           onInputChange={inputChangeHandler}
           required
-          autoCorrect
           initiallyValid={data.approach}
         />
-        <View style={styles.locationContainer}>
-          <View style={styles.coords}>
+
+        <View style={styles.inlineContainer}>
+          <View style={styles.inlineItems}>
             <InputApp
               id="latitude"
               textStyle={styles.text}
@@ -147,7 +168,7 @@ export default (props) => {
               initiallyValid={data.location && true}
             />
           </View>
-          <View style={styles.coords}>
+          <View style={styles.inlineItems}>
             <InputApp
               id="longitude"
               textStyle={styles.text}
@@ -163,135 +184,41 @@ export default (props) => {
               required
               ref={longitudeRef}
               onInputChange={inputChangeHandler}
-              onSubmitEditing={() => highlineNameRef.current.focus()}
               initiallyValid={data.location && true}
             />
           </View>
         </View>
-        <Text style={[styles.text, styles.title]} category="h5">
-          Highline Details
-        </Text>
-        <InputApp
-          id="highline-name"
-          label="Highline Name"
-          errorText="Please enter highline name!"
-          keyboardType="default"
-          autoCapitalize="sentences"
-          returnKeyType="next"
-          placeholder="Highline Name"
-          initialValue=""
-          size="large"
-          onInputChange={inputChangeHandler}
-          ref={highlineNameRef}
-          onSubmitEditing={() => highRef.current.focus()}
-          required
-        />
-        <View style={styles.locationContainer}>
-          <View style={styles.coords}>
-            <InputApp
-              id="high"
-              textStyle={styles.text}
-              label="High"
-              errorText="Incorrect highline high!"
-              keyboardType="numeric"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              placeholder="High"
-              initialValue=""
-              onInputChange={inputChangeHandler}
-              ref={highRef}
-              onSubmitEditing={() => lenghtRef.current.focus()}
-              required
-            />
-          </View>
-          <View style={styles.coords}>
-            <InputApp
-              id="length"
-              textStyle={styles.text}
-              label="Length"
-              errorText="Incorrect length!"
-              keyboardType="numeric"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              placeholder="Length"
-              initialValue=""
-              onInputChange={inputChangeHandler}
-              required
-            />
-          </View>
-        </View>
-        <InputApp
-          id="remarks"
-          label="Remarks"
-          multiline={true}
-          textStyle={[styles.text, styles.multiline]}
-          errorText="Please enter highline remarks!"
-          keyboardType="default"
-          autoCapitalize="sentences"
-          placeholder="Remarks"
-          initialValue=""
-          size="large"
-          onInputChange={inputChangeHandler}
-          required
-        />
-        <InputApp
-          id="establishedBy"
-          label="Established By"
-          errorText="Who established the highline?"
-          keyboardType="default"
-          autoCapitalize="sentences"
-          returnKeyType="next"
-          placeholder="Established By"
-          initialValue=""
-          size="large"
-          onInputChange={inputChangeHandler}
-          required
-        />
-        <Text style={styles.text} category="h5">
-          Photos
-        </Text>
-        <Button>Create Highline</Button>
+        <Button style={styles.button} onPress={submitHandler}>
+          Next
+        </Button>
       </View>
     </KeyboardAvoidingView>
   );
 };
-
 const themedStyles = StyleService.create({
   container: {
     backgroundColor: "background-basic-color-1",
   },
-
   formContainer: {
-    marginTop: 0,
+    marginTop: 20,
     paddingHorizontal: 16,
   },
-  emailSignLabel: {
-    //alignSelf: "flex-start",
-    marginTop: 15,
-    paddingHorizontal: 16,
-    fontFamily: "opensans-regular",
-  },
-  orContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 16,
-    marginTop: 52,
-  },
-  divider: {
-    flex: 1,
-  },
-
   text: {
     fontFamily: "opensans-regular",
   },
   multiline: { minHeight: 64 },
-  locationContainer: {
+  inlineContainer: {
     flexDirection: "row",
   },
-  coords: {
+  inlineItems: {
     flex: 1,
   },
   title: {
     marginVertical: 20,
   },
+  button: {
+    marginTop: 20,
+    marginBottom:20
+  },
 });
+export default LocationFrom;

@@ -7,9 +7,9 @@ import {
   useStyleSheet,
   StyleService,
 } from "@ui-kitten/components";
-import { HighlineIcon } from "../UI/appIcon";
+import { HighlineIcon } from "../UI/AppIcon";
 import { ImageOverlay } from "../UI/ImageOverlay";
-import { TopNav } from "../UI/topNav";
+import { TopNav } from "../UI/TopNav";
 
 export default ({ navigation, route }) => {
   const { location } = route.params;
@@ -20,11 +20,11 @@ export default ({ navigation, route }) => {
   };
 
   const Canyon = () => (
-    <HighlineIcon name="rope-swing" size={28} style={styles.iconButton} />
+    <HighlineIcon name="mountain" size={28} style={styles.iconButton} />
   );
 
   const lengthIcon = () => (
-    <HighlineIcon name="rope" size={28} style={styles.iconHighlighted} />
+    <HighlineIcon name="rope-fill" size={30} style={styles.iconButton} />
   );
 
   const RenderHeadingItem = () => {
@@ -90,8 +90,8 @@ export default ({ navigation, route }) => {
             </Button>
             <Button
               appearance="ghost"
-              status="warning"
               accessoryLeft={lengthIcon}
+              status="basic"
             >
               {highline.item.long}
             </Button>
@@ -161,9 +161,6 @@ const themedStyles = StyleService.create({
   iconButton: {
     paddingHorizontal: 0,
     tintColor: "text-hint-color",
-  },
-  iconHighlighted: {
-    paddingHorizontal: 0,
-    tintColor: "color-warning-500",
-  },
+  }
+ 
 });

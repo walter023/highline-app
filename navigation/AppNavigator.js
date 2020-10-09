@@ -16,16 +16,17 @@ import Profile from "../screens/Profile";
 import LocationList from "../screens/LocationList";
 import Highlines from "../components/highlines/highlines";
 import Highline from "../components/highlines/highline";
-import SearchLocation from "../components/location/searchLocation";
-import SingIn from "../components/auth/singIn";
-import SingUp from "../components/auth/singUp";
-import Form from "../components/form/form"
-const { Navigator, Screen } = createBottomTabNavigator();
+import SearchLocation from "../components/location/SearchLocation";
+import SingIn from "../components/auth/SignIn";
+import SingUp from "../components/auth/SignUp";
+import LocationForm from "../components/form/LocationForm";
+import HighlineForm from "../components/form/HighlineForm";
+import { HighlineIcon } from "../components/UI/AppIcon";
 
-const worldIcon = (props) => <Icon {...props} name="globe-2-outline" />;
-const meIcon = (props) => <Icon {...props} name="settings-2-outline" />;
+const homeIcon = (props) => <HighlineIcon {...props} name="slack-line-home" />;
+const meIcon = (props) => <HighlineIcon {...props} name="me" />;
 const listIcon = (props) => <Icon {...props} name="list-outline" />;
-
+const { Navigator, Screen } = createBottomTabNavigator();
 const config = {
   animation: "spring",
   config: {
@@ -45,7 +46,7 @@ const BottomTabBar = ({ navigation, state }) => (
       borderRadius: 100,
     }}
   >
-    <BottomNavigationTab title="Home" icon={worldIcon} />
+    <BottomNavigationTab title="Home" icon={homeIcon} />
     <BottomNavigationTab title="List" icon={listIcon} />
     <BottomNavigationTab title="Me" icon={meIcon} />
   </BottomNavigation>
@@ -81,7 +82,8 @@ function HomeStack() {
       <Stack.Screen name="Highine" component={Highline} />
       <Stack.Screen name="SingIn" component={SingIn} />
       <Stack.Screen name="SingUp" component={SingUp} />
-      <Stack.Screen name="Form" component={Form} />
+      <Stack.Screen name="LocationForm" component={LocationForm} />
+      <Stack.Screen name="HighlineForm" component={HighlineForm} />
       <Stack.Screen
         name="Search"
         component={SearchLocation}

@@ -8,8 +8,8 @@ import {
 } from "@ui-kitten/components";
 import { GoogleAutoComplete } from "react-native-google-autocomplete";
 import { ScrollView, View } from "react-native";
-import LocationItem from "./locationItem";
-import { BackIcon, CloseIcon } from "../UI/appIcon";
+import LocationItem from "./LocationItem";
+import { BackIcon, CloseIcon } from "../UI/AppIcon";
 
 const SearchLocation = (props) => {
   const styles = useStyleSheet(themedStyles);
@@ -32,7 +32,7 @@ const SearchLocation = (props) => {
   return (
     <Layout style={styles.container}>
       <GoogleAutoComplete
-        apiKey={""}
+        apiKey={"AIzaSyDytQu4OVCZ8ssXr9JVwViIf3jHGkjW4aQ"}
         debounce={500}
         minLength={3}
         queryTypes="(cities)"

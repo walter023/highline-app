@@ -10,13 +10,12 @@ import {
   Avatar,
 } from "@ui-kitten/components";
 import { useSelector } from "react-redux";
-
 import MapView, { Marker } from "react-native-maps";
 import { ImageOverlay } from "../UI/ImageOverlay";
 import { AnchorCard } from "../UI/anchorCard";
-import { HighlineIcon } from "../UI/appIcon";
-import TruncateText from "../UI/truncateText";
-import { TopNav } from "../UI/topNav";
+import { HighlineIcon } from "../UI/AppIcon";
+import TruncateText from "../UI/TruncateText";
+import { TopNav } from "../UI/TopNav";
 
 const LATITUDE_DELTA = 0.0522;
 const LONGITUDE_DELTA = LATITUDE_DELTA * 1;
@@ -36,11 +35,11 @@ export default ({ navigation, route }) => {
     longitude: location[0].location.coordinates[0],
   };
   const highIcon = () => (
-    <HighlineIcon name="canyon" size={30} style={styles.iconButton} />
+    <HighlineIcon name="mountain" size={30} style={styles.iconButton} />
   );
 
   const lengthIcon = () => (
-    <HighlineIcon name="rocky" size={35} style={styles.iconHighlighted} />
+    <HighlineIcon name="rope-fill" size={35} style={styles.iconButton} />
   );
   return (
     <ScrollView style={styles.container}>
@@ -78,7 +77,7 @@ export default ({ navigation, route }) => {
         </View>
       </View>
       <View style={styles.infoHighline}>
-        <Button appearance="ghost" status="warning" accessoryLeft={lengthIcon}>
+        <Button appearance="ghost" status="basic" accessoryLeft={lengthIcon}>
           {highline.long.indexOf("m") === -1
             ? `${highline.long}m`
             : highline.long}
@@ -109,7 +108,7 @@ export default ({ navigation, route }) => {
         >
           <Marker
             coordinate={LatLng}
-            image={require("../../assets/favicon.png")}
+            image={require("../../assets/map-14.png")}
           />
         </MapView>
       </View>
@@ -177,7 +176,7 @@ const themedStyles = StyleService.create({
   },
   iconHighlighted: {
     paddingHorizontal: 0,
-    tintColor: "color-warning-500",
+    tintColor: "color-primary-500",
   },
   anchorSection: {
     flexDirection: "row",

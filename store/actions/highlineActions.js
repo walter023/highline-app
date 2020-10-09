@@ -99,6 +99,7 @@ export const cleanMessage = () => {
 };
 
 export const postHighline = (highlineData) => {
+  deleteProperties(highlineData);
   return (dispatch) => {
     dispatch(startLoading());
     axios
@@ -107,13 +108,18 @@ export const postHighline = (highlineData) => {
         dispatch(setHighline(response.data.data));
       })
       .catch((err) => {
-        const error = err.response.data.error || err.message;
+        const error =
+          err.response && err.response.data
+            ? err.response.data.error
+            : err.message;
         dispatch(postHighlineFailed(error));
       });
   };
 };
 
 export const postLocation = (locationData) => {
+  delete locationData.longitude;
+  delete locationData.latitude;
   return (dispatch) => {
     dispatch(startLoading());
     axios
@@ -122,7 +128,10 @@ export const postLocation = (locationData) => {
         dispatch(setLocation(response.data.data));
       })
       .catch((err) => {
-        const error = err.response.data.error || err.message;
+        const error =
+        err.response && err.response.data
+          ? err.response.data.error
+          : err.message;
         dispatch(postLocationFailed(error));
       });
   };
@@ -136,12 +145,15 @@ export const uploadImages = (formData, highlineId) => {
       .put(url, formData)
       .then((response) => {
         dispatch(setHighline(response.data.data));
-        dispatch(redirect());
+      //  dispatch(redirect());
       })
       .catch((err) => {
-        const error = err.response.data.error || err.message;
+        const error =
+        err.response && err.response.data
+          ? err.response.data.error
+          : err.message;
         dispatch(uploadImageFailed(error));
-        setTimeout(() => dispatch(redirect()), 2000);
+       // setTimeout(() => dispatch(redirect()), 2000);
       });
   };
 };
@@ -161,7 +173,7 @@ export const initHighlines = (coords) => {
 export const getLocationName = (value) => {
   return (dispatch) => {
     axios
-      .get(`/location/name/${value}`)
+      .get(value ? `/location/name/${value}` : "/location/name")
       .then((response) => {
         dispatch(suggestLocationName(response.data.data));
       })
@@ -183,4 +195,16 @@ export const onSearchLocation = (value) => {
         dispatch(fetchHighlinesFailed(error));
       });
   };
+};
+const deleteProperties = (highlineData) => {
+  delete highlineData.rightAnchorMain;
+  delete highlineData.rightAnchorBackUp;
+  delete highlineData.rhsMainNumberAnchors;
+  delete highlineData.rhsBackupNumberAnchors;
+  delete highlineData.rshAnchorSize;
+  delete highlineData.leftAnchorMain;
+  delete highlineData.leftAnchorBackUp;
+  delete highlineData.lhsMainNumberAnchors;
+  delete highlineData.lhsBackupNumberAnchors;
+  delete highlineData.lshAnchorSize;
 };

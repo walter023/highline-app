@@ -5,7 +5,7 @@ import {
   Layout,
   Text,
 } from "@ui-kitten/components";
-import { Layers, Navigation } from "../../components/UI/appIcon";
+import { Layers, Navigation } from "../UI/AppIcon";
 import { StyleSheet, View, Dimensions } from "react-native";
 import React, { useState } from "react";
 import { PRIMARY_COLOR } from "../../utilities/constans";

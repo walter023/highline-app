@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { StyleSheet, Dimensions, View } from "react-native";
+import { StyleSheet, Dimensions, View, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as actions from "../../store/actions/index";
-import PopUpLocation from "./popUpLocation";
-import FloatControls from "./floatMapControls";
-
+import PopUpLocation from "./PopUpLocation";
+import FloatControls from "./FloatMapControls";
 
 const coordinates = {
   lat: -33.7507,
@@ -86,7 +85,6 @@ class Location extends Component {
   }
   render() {
     const { navigation } = this.props;
-
     let locations =
       this.props.locations.length > 0
         ? this.props.locations.map((loc, index) => {
@@ -99,8 +97,13 @@ class Location extends Component {
                 key={index}
                 coordinate={latLng}
                 onPress={() => this.rederpopUp(loc, latLng)}
-                image={require("../../assets/favicon.png")}
-              ></Marker>
+              
+              >
+                <Image
+                  source={require("../../assets/map-15.png")}
+                  style={styles.image}
+                />
+              </Marker>
             );
           })
         : null;
@@ -115,7 +118,6 @@ class Location extends Component {
     return (
       <React.Fragment>
         <View style={styles.container}>
-      
           <MapView
             ref={this.mapRef}
             style={styles.mapStyle}
@@ -144,6 +146,10 @@ const styles = StyleSheet.create({
     width: "95%",
     bottom: 10,
     position: "absolute",
+  },
+  image: {
+    width: 60,
+    height: 60,
   },
   container: {
     flex: 1,

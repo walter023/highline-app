@@ -31,9 +31,7 @@ const InputApp = React.forwardRef((props, ref) => {
   });
   const { onInputChange, id, initialValue } = props;
   useEffect(() => {
-    if (inputState.touched) {
-      onInputChange(id, inputState.value, inputState.isValid);
-    }
+    onInputChange(id, inputState.value, inputState.isValid);
   }, [inputState, onInputChange, id]);
 
   useEffect(() => {
@@ -83,6 +81,7 @@ const InputApp = React.forwardRef((props, ref) => {
         value={inputState.value}
         onChangeText={textChangeHandler}
         onBlur={lostFocusHandler}
+        //textStyle={styles.label}
         //  status= ? "danger" : props.status}
       />
       {!inputState.isValid && inputState.touched && (

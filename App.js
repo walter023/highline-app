@@ -10,7 +10,6 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { default as theme } from "./theme.json";
 //import { composeWithDevTools } from "redux-devtools-extension";
-//import { iconRegister } from './utilities/iconRegister';
 import { StatusBar } from "expo-status-bar";
 import highlineReducer from "./store/reducers/highline";
 import authReducer from "./store/reducers/auth";
@@ -38,14 +37,13 @@ let customFonts = {
 class App extends React.Component {
   state = {
     isLoadingComplete: false,
-    theme: "dark",
-    evaTheme: eva.dark,
+    theme: "light",
+    evaTheme: eva.light,
   };
   componentDidMount() {
     this.loadResourcesAsync();
     this.setState({ isLoadingComplete: true });
   }
-
   loadResourcesAsync = async () => {
     return await Font.loadAsync(customFonts);
   };
@@ -85,5 +83,4 @@ class App extends React.Component {
     }
   }
 }
-
 export default App;

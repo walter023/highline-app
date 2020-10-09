@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Card, StyleService, Text, useStyleSheet } from "@ui-kitten/components";
-import { HighlineIcon } from "../UI/appIcon";
+import { HighlineIcon } from "../UI/AppIcon";
 
 export const AnchorCard = (props) => {
   const styles = useStyleSheet(themedStyles);

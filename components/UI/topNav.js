@@ -4,7 +4,7 @@ import {
   Divider,
   TopNavigation,
 } from "@ui-kitten/components";
-import { BackIcon, Person } from "./appIcon";
+import { BackIcon, Person } from "./AppIcon";
 
 export const TopNav = ({ navigation, tittle }) => {
   const navigateBack = () => {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { Card, Text, Icon } from "@ui-kitten/components";
-import { HighlineIcon } from "../UI/appIcon";
+import { HighlineIcon } from "../UI/AppIcon";
 
 const { width } = Dimensions.get("window");
 //const ratio = 228 / 295;
@@ -72,8 +72,8 @@ class HighlineCard extends PureComponent {
       <View {...props} style={{ flexDirection: "row" }}>
         <View {...props} style={styles.footerContainer}>
           <HighlineIcon
-            name="rope-swing"
-            size={24}
+            name="mountain"
+            size={30}
             style={{ tintColor: "#8F9BB3" }}
           />
           <Text style={styles.text} appearance="hint" category="c1">
@@ -85,7 +85,7 @@ class HighlineCard extends PureComponent {
         <View style={styles.footerContainer}>
           <HighlineIcon
             name="rope"
-            size={24}
+            size={30}
             style={{ tintColor: "#8F9BB3" }}
           />
           <Text style={styles.text} appearance="hint" category="c1">

@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, LayoutAnimation, View } from "react-native";
 import { Layout, Icon } from "@ui-kitten/components";
-import Search from "../components/UI/search";
-
-import Location from "../components/location/location";
+import Search from "../components/UI/Search";
+import Location from "../components/location/Location";
 
 const Map = ({ navigation }) => {
 

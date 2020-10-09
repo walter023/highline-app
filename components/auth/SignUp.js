@@ -15,8 +15,8 @@ import {
   GoogleIcon,
   HeartIcon,
   TwitterIcon,
-} from "../UI/appIcon";
-import { KeyboardAvoidingView } from "../UI/keyboardAvoidingView";
+} from "../UI/AppIcon";
+import { KeyboardAvoidingView } from "../UI/KeyboardAvoidingView";
 import InputApp from "../UI/Input";
 import { formReducer, FORM_INPUT_UPDATE } from "../../store/reducers/form";
 

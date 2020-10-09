@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Modal, Text, Icon } from "@ui-kitten/components";
-import { CloseIcon } from "../UI/appIcon";
+import { CloseIcon } from "./AppIcon";
 
 export const ModalApp = (props) => {
   const [visible, setVisible] = React.useState(false);
