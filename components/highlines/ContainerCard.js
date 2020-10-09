@@ -1,6 +1,6 @@
 import React from "react";
 import { Animated, Dimensions, StyleSheet, } from "react-native";
-import HighlineCard, { CARD_HEIGHT as DEFAULT_CARD_HEIGHT } from "./card";
+import HighlineCard, { CARD_HEIGHT as DEFAULT_CARD_HEIGHT } from "./HighlineCard";
 
 export const MARGIN = 16;
 export const CARD_HEIGHT = DEFAULT_CARD_HEIGHT + MARGIN * 2;
