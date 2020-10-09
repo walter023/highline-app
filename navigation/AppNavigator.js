@@ -14,10 +14,10 @@ import {
 import Map from "../screens/Map";
 import Profile from "../screens/Profile";
 import LocationList from "../screens/LocationList";
-import Highlines from "../components/highlines/highlines";
+import Highlines from "../components/highlines/Highlines";
 import Highline from "../components/highlines/highline";
 import SearchLocation from "../components/location/SearchLocation";
-import SingIn from "../components/auth/SignIn";
+import SignIn from "../components/auth/SignIn";
 import SingUp from "../components/auth/SignUp";
 import LocationForm from "../components/form/LocationForm";
 import HighlineForm from "../components/form/HighlineForm";
@@ -80,7 +80,7 @@ function HomeStack() {
       <Stack.Screen name="Home" component={TabNavigator} />
       <Stack.Screen name="Highines" component={Highlines} />
       <Stack.Screen name="Highine" component={Highline} />
-      <Stack.Screen name="SingIn" component={SingIn} />
+      <Stack.Screen name="SingIn" component={SignIn} />
       <Stack.Screen name="SingUp" component={SingUp} />
       <Stack.Screen name="LocationForm" component={LocationForm} />
       <Stack.Screen name="HighlineForm" component={HighlineForm} />
