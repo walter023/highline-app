@@ -65,6 +65,11 @@ const InputApp = React.forwardRef((props, ref) => {
     dispatch({ type: INPUT_BLUR });
   };
 
+  const textStyle = (value) => (
+    <Text style={styles.label} category="s1">
+      {value}
+    </Text>
+  );
   return (
     <View style={styles.formControl}>
       <Text
@@ -77,6 +82,8 @@ const InputApp = React.forwardRef((props, ref) => {
       <Input
         ref={ref}
         {...props}
+        label={() => textStyle(props.label)}
+        textStyle={styles.label}
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}

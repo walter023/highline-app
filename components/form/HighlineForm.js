@@ -5,7 +5,7 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { View, Alert, Image } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import InputApp from "../UI/Input";
 import {
@@ -136,7 +136,7 @@ const HighlineForm = (props) => {
       <View style={[styles.container, styles.formContainer]}>
         <InputApp
           id="name"
-          label="Highline Name"
+          label="Name"
           errorText="Please enter highline name!"
           keyboardType="default"
           autoCapitalize="sentences"
@@ -377,10 +377,12 @@ const HighlineForm = (props) => {
           <Text style={styles.label} category="p2">
             Photos
           </Text>
-          <View style={styles.inlineContainer}>
+          <ScrollView style={styles.inlineContainer} horizontal={true}>
             <PhotoPicker />
             <PhotoPicker />
-          </View>
+            <PhotoPicker />
+            <PhotoPicker />
+          </ScrollView>
         </View>
 
         <InputApp

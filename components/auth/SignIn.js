@@ -56,7 +56,7 @@ export default ({ navigation }) => {
     }
   }, [auth.error]);
   return (
-    <React.Fragment>
+    <KeyboardAvoidingView>
       <ImageOverlay
         style={styles.container}
         source={require("../../assets/bg-img.jpg")}
@@ -149,7 +149,7 @@ export default ({ navigation }) => {
           </View>
         </View>
       </ImageOverlay>
-    </React.Fragment>
+    </KeyboardAvoidingView>
   );
 };
 
