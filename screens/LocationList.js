@@ -3,7 +3,7 @@ import { Animated, FlatList } from "react-native";
 import { Layout, TopNavigation } from "@ui-kitten/components";
 import { useSelector, useDispatch } from "react-redux";
 import { TopNav } from "../components/UI/TopNav";
-import ContainerCard from "../components/highlines/containerCard";
+import ContainerCard from "../components/highlines/ContainerCard";
 import * as actions from "../store/actions/index";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

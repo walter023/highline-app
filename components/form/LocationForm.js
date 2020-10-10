@@ -84,7 +84,7 @@ const LocationFrom = (props) => {
       return;
     }
     if (data._id) {
-       // TODO: dispatch() update
+      // TODO: dispatch() update
       dispatch(actions.setLocation(data));
       navigation.navigate("HighlineForm");
     } else {
@@ -102,12 +102,17 @@ const LocationFrom = (props) => {
       );
     }
   }, [dispatch, data, formState]);
+  const textStyle = (value) => (
+    <Text style={styles.text} category="s1">
+      {value}
+    </Text>
+  );
   return (
     <KeyboardAvoidingView style={styles.container}>
       <TopNav navigation={navigation} tittle="Location Form" />
       <View style={[styles.container, styles.formContainer]}>
         <Autocomplete
-          label="Name"
+          label={textStyle("Name")}
           placeholder="Location Name"
           value={value}
           onSelect={onSelect}
@@ -218,7 +223,7 @@ const themedStyles = StyleService.create({
   },
   button: {
     marginTop: 20,
-    marginBottom:20
+    marginBottom: 20,
   },
 });
 export default LocationFrom;

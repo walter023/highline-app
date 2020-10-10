@@ -84,7 +84,7 @@ class HighlineCard extends PureComponent {
         </View>
         <View style={styles.footerContainer}>
           <HighlineIcon
-            name="rope"
+            name="length"
             size={30}
             style={{ tintColor: "#8F9BB3" }}
           />

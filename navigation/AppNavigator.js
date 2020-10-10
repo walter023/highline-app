@@ -15,7 +15,7 @@ import Map from "../screens/Map";
 import Profile from "../screens/Profile";
 import LocationList from "../screens/LocationList";
 import Highlines from "../components/highlines/Highlines";
-import Highline from "../components/highlines/highline";
+import Highline from "../components/highlines/Highline";
 import SearchLocation from "../components/location/SearchLocation";
 import SignIn from "../components/auth/SignIn";
 import SingUp from "../components/auth/SignUp";

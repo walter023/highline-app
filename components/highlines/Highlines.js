@@ -24,7 +24,7 @@ export default ({ navigation, route }) => {
   );
 
   const lengthIcon = () => (
-    <HighlineIcon name="rope-fill" size={30} style={styles.iconButton} />
+    <HighlineIcon name="length" size={30} style={styles.iconButton} />
   );
 
   const RenderHeadingItem = () => {

@@ -39,7 +39,7 @@ export default ({ navigation, route }) => {
   );
 
   const lengthIcon = () => (
-    <HighlineIcon name="rope-fill" size={35} style={styles.iconButton} />
+    <HighlineIcon name="length" size={35} style={styles.iconButton} />
   );
   return (
     <ScrollView style={styles.container}>
