@@ -82,8 +82,7 @@ const InputApp = React.forwardRef((props, ref) => {
       <Input
         ref={ref}
         {...props}
-        label={() => textStyle(props.label)}
-        textStyle={styles.label}
+        //label={() => textStyle(props.label)}
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}
