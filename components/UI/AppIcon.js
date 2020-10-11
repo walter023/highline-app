@@ -8,21 +8,21 @@ export const Person = (props) => <Icon {...props} name="person-outline" />;
 export const GoogleIcon = (style) => <Icon {...style} name="google" />;
 export const FacebookIcon = (style) => <Icon {...style} name="facebook" />;
 export const TwitterIcon = (style) => <Icon {...style} name="twitter" />;
-export const InfoIcon = (style) => (
-  <Icon {...style} name="info-outline" />
-);
-export const Camera = (style) => (
-  <Icon {...style} name="camera-outline" />
-);
+export const InfoIcon = (style) => <Icon {...style} name="info-outline" />;
+export const Camera = (style) => <Icon {...style} name="camera-outline" />;
 export const ArrowForwardIconOutline = (style) => (
   <Icon {...style} name="arrow-forward-outline" />
 );
 export const BackIcon = (props) => (
   <Icon {...props} name="arrow-ios-back-outline" />
 );
+export const Cloud = (props) => <Icon {...props} name="cloud-upload-outline" />;
 export const MoreIcon = (props) => (
   <Icon {...props} name="more-horizontal-outline" />
-);  
+);
+export const ArrowHead = (props) => (
+  <Icon {...props} name="arrowhead-right-outline" />
+);
 export const HeartIcon = (style) => {
   return <Icon {...style} name="heart" />;
 };

@@ -10,19 +10,15 @@ import { useSelector, useDispatch } from "react-redux";
 import InputApp from "../UI/Input";
 import {
   Button,
-  Divider,
   StyleService,
   Text,
   useStyleSheet,
-  Tooltip,
-  List,
 } from "@ui-kitten/components";
 import { TopNav } from "../UI/TopNav";
 import { KeyboardAvoidingView } from "../UI/KeyboardAvoidingView";
 import { formReducer, FORM_INPUT_UPDATE } from "../../store/reducers/form";
 import * as actions from "../../store/actions/index";
-import ComboBox from "../UI/ComboBox";
-import { InfoIcon, Camera } from "../UI/AppIcon";
+import { ArrowHead } from "../UI/AppIcon";
 import PhotoPicker from "../UI/PhotoPicker";
 
 const HighlineForm = (props) => {
@@ -33,9 +29,7 @@ const HighlineForm = (props) => {
   const location = useSelector((state) => state.data.location);
   const dispatch = useDispatch();
   const [photos, setPhotos] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [visibleMain, setVisibleMain] = useState(false);
-  const [visibleBackUp, setVisibleBackUp] = useState(false);
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       locationId: location._id,
@@ -44,16 +38,6 @@ const HighlineForm = (props) => {
       high: "",
       remarks: "",
       establishedBy: "",
-      rightAnchorMain: "",
-      rightAnchorBackUp: "",
-      rhsMainNumberAnchors: "",
-      rhsBackupNumberAnchors: "",
-      rshAnchorSize: "",
-      leftAnchorMain: "",
-      leftAnchorBackUp: "",
-      lhsMainNumberAnchors: "",
-      lhsBackupNumberAnchors: "",
-      lshAnchorSize: "",
     },
     inputValidities: {
       name: false,
@@ -61,16 +45,6 @@ const HighlineForm = (props) => {
       high: false,
       remarks: false,
       establishedBy: false,
-      rightAnchorMain: false,
-      rightAnchorBackUp: false,
-      rhsMainNumberAnchors: false,
-      rhsBackupNumberAnchors: false,
-      rshAnchorSize: true,
-      leftAnchorMain: false,
-      leftAnchorBackUp: false,
-      lhsMainNumberAnchors: false,
-      lhsBackupNumberAnchors: false,
-      lshAnchorSize: true,
     },
     formIsValid: true,
   });
@@ -89,50 +63,26 @@ const HighlineForm = (props) => {
     [dispatchFormState]
   );
   const submitHandler = useCallback(() => {
-    if (!formState.formIsValid) {
+    /* if (!formState.formIsValid) {
       Alert.alert("Wrong input!", "Please check the errors in the form.", [
         { text: "Okay" },
       ]);
       return;
-    }
+    }*/
     if (location._id) {
-      dispatch(
+      navigation.navigate("AnchorForm");
+      /* dispatch(
         actions.postHighline({
           ...formState.inputValues,
-          anchors: {
-            rhs: {
-              main: formState.inputValues.rightAnchorMain.replace(" ", "_"),
-              howManyOnMain: formState.inputValues.rhsMainNumberAnchors,
-              backup: formState.inputValues.rightAnchorBackUp.replace(" ", "_"),
-              howMany: formState.inputValues.rhsBackupNumberAnchors,
-              size: formState.inputValues.rshAnchorSize,
-            },
-            lhs: {
-              main: formState.inputValues.leftAnchorMain.replace(" ", "_"),
-              howManyOnMain: formState.inputValues.lhsMainNumberAnchors,
-              backup: formState.inputValues.leftAnchorBackUp.replace(" ", "_"),
-              howMany: formState.inputValues.lhsBackupNumberAnchors,
-              size: formState.inputValues.lshAnchorSize,
-            },
-          },
         })
-      );
+      );*/
     }
   }, [dispatch, formState]);
-
-  const toolTip = (setVisibly) => (
-    <Button
-      onPress={() => setVisibly(true)}
-      appearance="ghost"
-      status="basic"
-      accessoryLeft={InfoIcon}
-    />
-  );
 
   //#endregion
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <TopNav navigation={navigation} tittle="Highline Details" />
+      <TopNav navigation={navigation} tittle="Highline Info" />
       <View style={[styles.container, styles.formContainer]}>
         <InputApp
           id="name"
@@ -182,183 +132,6 @@ const HighlineForm = (props) => {
             />
           </View>
         </View>
-        <ComboBox
-          id="leftAnchorMain"
-          label="Left Hand Side Main Anchor"
-          placeholder="Righ Hand Main Anchor"
-          onSelectChange={inputChangeHandler}
-        />
-        <ComboBox
-          id="leftAnchorBackUp"
-          label="Left Hand Back Up Anchor"
-          placeholder="Righ Hand Side Back Up Anchor"
-          onSelectChange={inputChangeHandler}
-        />
-
-        <View style={styles.inlineContainer}>
-          <View style={styles.inlineItems}>
-            <View style={styles.inputTootip}>
-              <InputApp
-                id="lhsMainNumberAnchors"
-                textStyle={styles.text}
-                label="Main"
-                keyboardType="numeric"
-                placeholder="Main"
-                initialValue=""
-                onInputChange={inputChangeHandler}
-                required
-                errorText="Field required!"
-              />
-            </View>
-            <View style={styles.toolTip}>
-              <Tooltip
-                anchor={() => toolTip(setVisibleMain)}
-                visible={visibleMain}
-                placement="right start"
-                onBackdropPress={() => setVisibleMain(false)}
-              >
-                Number of anchor(s) main point.
-              </Tooltip>
-            </View>
-          </View>
-          <View style={styles.inlineItems}>
-            <View style={styles.inputTootip}>
-              <InputApp
-                id="lhsBackupNumberAnchors"
-                textStyle={styles.text}
-                label="Back Up"
-                keyboardType="numeric"
-                placeholder="Back Up"
-                initialValue=""
-                onInputChange={inputChangeHandler}
-                required
-                errorText="Field required!"
-              />
-            </View>
-            <View style={styles.toolTip}>
-              <Tooltip
-                anchor={() => toolTip(setVisibleBackUp)}
-                visible={visibleBackUp}
-                placement="right start"
-                onBackdropPress={() => setVisibleBackUp(false)}
-              >
-                Number of anchor(s) back up point.
-              </Tooltip>
-            </View>
-          </View>
-          <View style={styles.inlineItems}>
-            <View style={styles.inputTootip}>
-              <InputApp
-                id="lshAnchorSize"
-                textStyle={styles.text}
-                label="Anchor Size"
-                keyboardType="numeric"
-                placeholder="Size"
-                initialValue=""
-                onInputChange={inputChangeHandler}
-                required={false}
-              />
-            </View>
-            <View style={styles.toolTip}>
-              <Tooltip
-                anchor={() => toolTip(setVisible)}
-                visible={visible}
-                placement="right start"
-                onBackdropPress={() => setVisible(false)}
-              >
-                Field no required. Example : 12mm
-              </Tooltip>
-            </View>
-          </View>
-        </View>
-        <ComboBox
-          id="rightAnchorMain"
-          label="Righ Hand Side Main Anchor"
-          placeholder="Righ Hand Side Main Anchor"
-          onSelectChange={inputChangeHandler}
-        />
-        <ComboBox
-          id="rightAnchorBackUp"
-          label="Righ Hand Side Back Up Anchor"
-          placeholder="Righ Hand Side Back Up Anchor"
-          onSelectChange={inputChangeHandler}
-        />
-        <View style={styles.inlineContainer}>
-          <View style={styles.inlineItems}>
-            <View style={styles.inputTootip}>
-              <InputApp
-                id="rhsMainNumberAnchors"
-                textStyle={styles.text}
-                label="Main"
-                keyboardType="numeric"
-                placeholder="Main"
-                initialValue=""
-                errorText="Field required!"
-                onInputChange={inputChangeHandler}
-                required
-              />
-            </View>
-            <View style={styles.toolTip}>
-              <Tooltip
-                anchor={() => toolTip(setVisibleMain)}
-                visible={visibleMain}
-                placement="right start"
-                onBackdropPress={() => setVisibleMain(false)}
-              >
-                Number of anchor(s) main point.
-              </Tooltip>
-            </View>
-          </View>
-          <View style={styles.inlineItems}>
-            <View style={styles.inputTootip}>
-              <InputApp
-                id="rhsBackupNumberAnchors"
-                textStyle={styles.text}
-                label="Back Up"
-                keyboardType="numeric"
-                placeholder="Back Up"
-                initialValue=""
-                errorText="Field required!"
-                onInputChange={inputChangeHandler}
-                required
-              />
-            </View>
-            <View style={styles.toolTip}>
-              <Tooltip
-                anchor={() => toolTip(setVisibleBackUp)}
-                visible={visibleBackUp}
-                placement="right start"
-                onBackdropPress={() => setVisibleBackUp(false)}
-              >
-                Number of anchor(s) back up point.
-              </Tooltip>
-            </View>
-          </View>
-          <View style={styles.inlineItems}>
-            <View style={styles.inputTootip}>
-              <InputApp
-                id="rshAnchorSize"
-                textStyle={styles.text}
-                label="Anchor Size"
-                keyboardType="numeric"
-                placeholder="Size"
-                initialValue=""
-                onInputChange={inputChangeHandler}
-                required={false}
-              />
-            </View>
-            <View style={styles.toolTip}>
-              <Tooltip
-                anchor={() => toolTip(setVisible)}
-                visible={visible}
-                placement="right start"
-                onBackdropPress={() => setVisible(false)}
-              >
-                Field no required. Example : 12mm
-              </Tooltip>
-            </View>
-          </View>
-        </View>
         <InputApp
           id="remarks"
           label="Remarks"
@@ -385,21 +158,13 @@ const HighlineForm = (props) => {
           </ScrollView>
         </View>
 
-        <InputApp
-          id="establishedBy"
-          label="Established By"
-          errorText="Who established the highline?"
-          keyboardType="default"
-          autoCapitalize="sentences"
-          returnKeyType="next"
-          placeholder="Established By"
-          initialValue=""
-          size="large"
-          onInputChange={inputChangeHandler}
-          required
-        />
-
-        <Button onPress={submitHandler}>Add Highline</Button>
+        <Button
+          accessoryRight={ArrowHead}
+          onPress={submitHandler}
+          style={styles.button}
+        >
+          <Text  category="s1" style={[styles.text, styles.textColor]}>Next Anchors</Text>
+        </Button>
       </View>
     </KeyboardAvoidingView>
   );
@@ -416,7 +181,7 @@ const themedStyles = StyleService.create({
   text: {
     fontFamily: "opensans-regular",
   },
-  multiline: { minHeight: 64 },
+  multiline: { minHeight: 90 },
   inlineContainer: {
     flexDirection: "row",
   },
@@ -424,24 +189,17 @@ const themedStyles = StyleService.create({
     flex: 1,
     flexDirection: "row",
   },
-  title: {
-    marginVertical: 20,
-  },
-  toolTip: {
-    alignSelf: "flex-end",
-    flex: 1,
-    right: 10,
-  },
-  inputTootip: {
-    flex: 3,
-  },
   label: {
     marginHorizontal: 16,
     marginVertical: 2,
     fontFamily: "opensans-regular",
   },
   button: {
-    // marginTop: -15,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  textColor: {
+    color: "#fff",
   },
 });
 //#endregion

@@ -15,6 +15,7 @@ import { TopNav } from "../UI/TopNav";
 import { KeyboardAvoidingView } from "../UI/KeyboardAvoidingView";
 import { formReducer, FORM_INPUT_UPDATE } from "../../store/reducers/form";
 import * as actions from "../../store/actions/index";
+import { ArrowHead } from "../UI/AppIcon";
 
 const LocationFrom = (props) => {
   const { navigation } = props;
@@ -109,7 +110,7 @@ const LocationFrom = (props) => {
   );
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <TopNav navigation={navigation} tittle="Location Form" />
+      <TopNav navigation={navigation} tittle="Location Info" />
       <View style={[styles.container, styles.formContainer]}>
         <Autocomplete
           label={textStyle("Name")}
@@ -193,8 +194,14 @@ const LocationFrom = (props) => {
             />
           </View>
         </View>
-        <Button style={styles.button} onPress={submitHandler}>
-          Next
+        <Button
+          style={styles.button}
+          onPress={submitHandler}
+          accessoryRight={ArrowHead}
+        >
+          <Text style={[styles.text, styles.textColor]} category="s1">
+            Next Highline
+          </Text>
         </Button>
       </View>
     </KeyboardAvoidingView>
@@ -211,7 +218,9 @@ const themedStyles = StyleService.create({
   text: {
     fontFamily: "opensans-regular",
   },
-  multiline: { minHeight: 64 },
+  multiline: {
+    minHeight: 100,
+  },
   inlineContainer: {
     flexDirection: "row",
   },
@@ -224,6 +233,9 @@ const themedStyles = StyleService.create({
   button: {
     marginTop: 20,
     marginBottom: 20,
+  },
+  textColor: {
+    color: "#fff",
   },
 });
 export default LocationFrom;

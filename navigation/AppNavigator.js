@@ -21,6 +21,7 @@ import SignIn from "../components/auth/SignIn";
 import SingUp from "../components/auth/SignUp";
 import LocationForm from "../components/form/LocationForm";
 import HighlineForm from "../components/form/HighlineForm";
+import AnchorForm from "../components/form/AnchorForm";
 import { HighlineIcon } from "../components/UI/AppIcon";
 
 const homeIcon = (props) => <HighlineIcon {...props} name="slack-line-home" />;
@@ -84,6 +85,7 @@ function HomeStack() {
       <Stack.Screen name="SingUp" component={SingUp} />
       <Stack.Screen name="LocationForm" component={LocationForm} />
       <Stack.Screen name="HighlineForm" component={HighlineForm} />
+      <Stack.Screen name="AnchorForm" component={AnchorForm} />
       <Stack.Screen
         name="Search"
         component={SearchLocation}
